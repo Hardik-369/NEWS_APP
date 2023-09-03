@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My News App</title>
+    <!-- Add Tailwind CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #DCE35B;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #45B649, #DCE35B);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #45B649, #DCE35B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #333; /* Text color for readability */
+        }
+
+        .header {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-input {
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            font-size: 1rem;
+            width: 70%;
+        }
+
+        .search-button {
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-button:hover {
+            background-color: #003f80;
+        }
+
+        .article-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .article-source {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="text-3xl font-semibold">News App</h1>
+    </div>
+
+    <div class="container">
+        <form method="POST" class="mb-4 search-box">
+            <input type="text" id="query" name="query" class="search-input focus:outline-none" placeholder="Enter a keyword for news" required>
+            <button type="submit" class="search-button">Search</button>
+        </form>
+
+        {% if user_query %}
+            <h2 class="text-2xl font-semibold mb-4">Top Headlines for "{{ user_query }}"</h2>
+            <ul>
+                {% for article in top_headlines %}
+                    <li class="mb-6">
+                        <a href="{{ article.url }}" class="article-title text-blue-500 hover:underline">{{ article.title }}</a><br>
+                        <span class="article-source">Source: {{ article.source.name }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <h2 class="text-2xl font-semibold mt-8 mb-4">All Articles for "{{ user_query }}"</h2>
+            <ul>
+                {% for article in all_articles %}
+                    <li class="mb-6">
+                        <a href="{{ article.url }}" class="article-title text-blue-500 hover:underline">{{ article.title }}</a><br>
+                        <span class="article-source">Source: {{ article.source.name }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
